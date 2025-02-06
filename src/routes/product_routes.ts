@@ -2,8 +2,7 @@ import express from "express";
 import {
   listarProdutos,
   criarProduto,
-  atualizarProduto,
-  excluirProduto,
+  obterProduto,
 } from "../controllers/product_controller";
 
 const router = express.Router();
@@ -12,8 +11,6 @@ router.get("/", listarProdutos);
 
 router.post("/", criarProduto);
 
-router.put("/:id", atualizarProduto);
-
-router.delete("/:id", excluirProduto);
+router.get("/:id", obterProduto);
 
 export default router;

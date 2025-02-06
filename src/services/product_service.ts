@@ -1,10 +1,11 @@
 import Produto from "../models/product";
 
-// Interface para os dados do produto
 export interface IProdutoInput {
   name: string;
   description: string;
   qtdProduct: number;
+  image: string;
+  price: number;
 }
 
 class ProdutoService {
@@ -18,18 +19,42 @@ class ProdutoService {
     }
   }
 
+  // retornar um unico produto
+  async obterProduto(id: string) {
+    try {
+      const produto = await Produto.findById(id);
+      return produto;
+    } catch (error) {
+      throw new Error("Erro ao obter produto");
+    }
+  }
+
   //  Criar um novo produto
   async criarProduto(dados: IProdutoInput) {
     try {
-      const { name, description, qtdProduct } = dados;
+      const { name, description, qtdProduct, image, price } = dados;
 
-      if (!name || !description || qtdProduct === undefined) {
+      console.log(name, description, qtdProduct, image, price);
+
+      if (
+        !name ||
+        !description ||
+        !qtdProduct ||
+        !image ||
+        !price === undefined
+      ) {
         throw new Error(
           "Todos os campos são obrigatórios: name, description, qtdProduct"
         );
       }
 
-      const novoProduto = new Produto({ name, description, qtdProduct });
+      const novoProduto = new Produto({
+        name,
+        description,
+        qtdProduct,
+        image,
+        price,
+      });
       await novoProduto.save();
       return novoProduto;
     } catch (error) {

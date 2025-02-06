@@ -5,6 +5,8 @@ export interface IProduto extends Document {
   description: string;
   qtdProduct: number;
   createdAt: Date;
+  price: number;
+  image: string;
 }
 
 const produtoSchema = new Schema<IProduto>({
@@ -20,6 +22,15 @@ const produtoSchema = new Schema<IProduto>({
     type: Number,
     required: true,
     min: 0,
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  image: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
