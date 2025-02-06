@@ -1,12 +1,23 @@
-import express, { Request, Response } from "express";
+import "dotenv/config";
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import produtosRoutes from "./routes/product_routes";
 
 const app = express();
-const port = 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
-});
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.use("/produtos", produtosRoutes);
+
+console.log(process.env.MONGODB_URI);
+
+mongoose
+  .connect(process.env.MONGODB_URI || "")
+  .then(() => console.log("Conectado ao MongoDB"))
+  .catch((err) => console.error("Erro ao conectar ao MongoDB:", err));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
