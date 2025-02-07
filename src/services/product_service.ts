@@ -3,7 +3,6 @@ import Produto from "../models/product";
 export interface IProdutoInput {
   name: string;
   description: string;
-  qtdProduct: number;
   image: string;
   price: number;
 }
@@ -32,26 +31,11 @@ class ProdutoService {
   //  Criar um novo produto
   async criarProduto(dados: IProdutoInput) {
     try {
-      const { name, description, qtdProduct, image, price } = dados;
-
-      console.log(name, description, qtdProduct, image, price);
-
-      if (
-        !name ||
-        !description ||
-        !qtdProduct ||
-        !image ||
-        !price === undefined
-      ) {
-        throw new Error(
-          "Todos os campos são obrigatórios: name, description, qtdProduct"
-        );
-      }
+      const { name, description, image, price } = dados;
 
       const novoProduto = new Produto({
         name,
         description,
-        qtdProduct,
         image,
         price,
       });
