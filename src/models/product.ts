@@ -6,6 +6,7 @@ export interface IProduto extends Document {
   createdAt: Date;
   price: number;
   image: string;
+  stock: number;
 }
 
 const produtoSchema = new Schema<IProduto>({
@@ -25,6 +26,12 @@ const produtoSchema = new Schema<IProduto>({
   image: {
     type: String,
     required: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+    min: 0,
   },
   createdAt: {
     type: Date,

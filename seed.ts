@@ -5,12 +5,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
-console.log(MONGODB_URI);
 
 const produtos = [
   {
     name: "Tablet Air",
     price: 400,
+    stock: 10,
     description:
       "Tablet leve e potente com tela de retina e suporte a caneta digital.",
     image:
@@ -19,6 +19,7 @@ const produtos = [
   {
     name: "PlayStation 5",
     price: 500,
+    stock: 45,
     description: "Console de últimas geração com graficos em 4k e ray tracing.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreihuq6wr2bzfgcmevrimummisdvstwq5mvj7jmkrav2zntwtsdfdai",
@@ -26,6 +27,7 @@ const produtos = [
   {
     name: "Notebook Asus",
     price: 600,
+    stock: 5,
     description:
       "Notebook premium com processador de ultima geração e design elegante.",
     image:
@@ -34,6 +36,7 @@ const produtos = [
   {
     name: "Camera Canon",
     price: 700,
+    stock: 3,
     description: "Câmera profissional com sensor full-frame e gravação 4k.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreid4i5d53r63v55z6yt53idkrdxlatdulag3hupaludufvbfe3tseq",
@@ -41,6 +44,7 @@ const produtos = [
   {
     name: "HeadPhone",
     price: 800,
+    stock: 2,
     description: "Fones de ouvido sem fio com cancelamento de ruído ativo.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreicfoztp77v4htutmui5fdoisy2ealdphlgpw4munsp6kaoldnxvyi",
@@ -48,6 +52,7 @@ const produtos = [
   {
     name: "Iphone 16",
     price: 500,
+    stock: 8,
     description:
       "Smartphone premium com camera de alta qualidade e bateria de longa duração.",
     image:
@@ -56,6 +61,7 @@ const produtos = [
   {
     name: "Smart Watch",
     price: 1000,
+    stock: 50,
     description:
       "Relógio inteligente com monitoramento de saúde e GPS integrado.",
     image:
@@ -64,6 +70,7 @@ const produtos = [
   {
     name: "Macbook Air M3",
     price: 1500,
+    stock: 10,
     description:
       "Notebook premium com processador de ultima geração e design elegante.",
     image:
@@ -72,6 +79,7 @@ const produtos = [
   {
     name: "Caixa de som",
     price: 200,
+    stock: 90,
     description:
       "Caixa de som portatil com conexão Bluetooth e bateria de longa duração",
     image:
@@ -80,6 +88,7 @@ const produtos = [
   {
     name: "Mouse Gamer Logitech",
     price: 450,
+    stock: 1,
     description:
       "Mouse gamer com sensor optico de alta precisão e botões programaveis.",
     image:
@@ -88,6 +97,7 @@ const produtos = [
   {
     name: "Teclado mecanico Corsair",
     price: 1100,
+    stock: 3,
     description:
       "Teclado mecanico com switches mecânicos e iluminação RGB personalizavel.",
     image:

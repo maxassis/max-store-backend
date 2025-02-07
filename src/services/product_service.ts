@@ -8,10 +8,10 @@ export interface IProdutoInput {
 }
 
 class ProdutoService {
-  // Listar todos os produtos
+  // Listar todos os produtos em estoque
   async listarProdutos() {
     try {
-      const produtos = await Produto.find();
+      const produtos = await Produto.find({ stock: { $gt: 0 } });
       return produtos;
     } catch (error) {
       throw new Error("Erro ao listar produtos");
