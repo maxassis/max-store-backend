@@ -56,7 +56,7 @@ const cartSchema = new Schema<Cart>({
       },
       updatedAt: {
         type: Date,
-        default: Date.now, // Define a data atual como valor padrão
+        default: Date.now,
       },
     },
   ],
