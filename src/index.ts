@@ -3,12 +3,14 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import produtosRoutes from "./routes/product_routes";
+import cartRouters from "./routes/cart_routes";
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use("/produtos", produtosRoutes);
+app.use("/cart", cartRouters);
 
 mongoose
   .connect(process.env.MONGODB_URI || "")
