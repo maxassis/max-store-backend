@@ -52,3 +52,46 @@ export const criarProduto = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const excluirProduto = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const idSchema = z.string();
+    const validatedId = idSchema.parse(id);
+
+    await produtoService.excluirProduto(validatedId);
+    res.status(204).send();
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ errors: error.errors });
+    } else if (error instanceof Error) {
+      res.status(404).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "Erro interno ao deletar o produto." });
+    }
+  }
+};
+
+export const atualizarProduto = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const idSchema = z.string();
+    const validatedId = idSchema.parse(id);
+
+    const validatedData = produtoSchema.partial().parse(req.body);
+
+    const produtoAtualizado = await produtoService.atualizarProduto(
+      validatedId,
+      validatedData
+    );
+    res.status(200).json(produtoAtualizado);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ errors: error.errors });
+    } else if (error instanceof Error) {
+      res.status(404).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "Erro interno ao atualizar o produto." });
+    }
+  }
+};
