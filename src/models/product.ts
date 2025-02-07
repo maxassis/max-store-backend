@@ -3,7 +3,6 @@ import mongoose, { Document, Schema } from "mongoose";
 export interface IProduto extends Document {
   name: string;
   description: string;
-  qtdProduct: number;
   createdAt: Date;
   price: number;
   image: string;
@@ -17,11 +16,6 @@ const produtoSchema = new Schema<IProduto>({
   description: {
     type: String,
     required: true,
-  },
-  qtdProduct: {
-    type: Number,
-    required: true,
-    min: 0,
   },
   price: {
     type: Number,

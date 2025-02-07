@@ -11,7 +11,6 @@ const produtos = [
   {
     name: "Tablet Air",
     price: 400,
-    qtdProduct: 0,
     description:
       "Tablet leve e potente com tela de retina e suporte a caneta digital.",
     image:
@@ -20,7 +19,6 @@ const produtos = [
   {
     name: "PlayStation 5",
     price: 500,
-    qtdProduct: 0,
     description: "Console de últimas geração com graficos em 4k e ray tracing.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreihuq6wr2bzfgcmevrimummisdvstwq5mvj7jmkrav2zntwtsdfdai",
@@ -28,7 +26,6 @@ const produtos = [
   {
     name: "Notebook Asus",
     price: 600,
-    qtdProduct: 0,
     description:
       "Notebook premium com processador de ultima geração e design elegante.",
     image:
@@ -37,7 +34,6 @@ const produtos = [
   {
     name: "Camera Canon",
     price: 700,
-    qtdProduct: 0,
     description: "Câmera profissional com sensor full-frame e gravação 4k.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreid4i5d53r63v55z6yt53idkrdxlatdulag3hupaludufvbfe3tseq",
@@ -45,7 +41,6 @@ const produtos = [
   {
     name: "HeadPhone",
     price: 800,
-    qtdProduct: 0,
     description: "Fones de ouvido sem fio com cancelamento de ruído ativo.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreicfoztp77v4htutmui5fdoisy2ealdphlgpw4munsp6kaoldnxvyi",
@@ -53,7 +48,6 @@ const produtos = [
   {
     name: "Iphone 16",
     price: 500,
-    qtdProduct: 0,
     description:
       "Smartphone premium com camera de alta qualidade e bateria de longa duração.",
     image:
@@ -62,16 +56,14 @@ const produtos = [
   {
     name: "Smart Watch",
     price: 1000,
-    qtdProduct: 1200,
     description:
-      "Relógio inteligente com monotoramento de saúde e GPS integrado.",
+      "Relógio inteligente com monitoramento de saúde e GPS integrado.",
     image:
       "https://yellow-fascinating-badger-992.mypinata.cloud/ipfs/bafkreifrfvmf4lwb6mv3fjxpn6kag3ahrtfo3uki4ava4kvkxefrn3zwmu",
   },
   {
     name: "Macbook Air M3",
     price: 1500,
-    qtdProduct: 900,
     description:
       "Notebook premium com processador de ultima geração e design elegante.",
     image:
@@ -80,7 +72,6 @@ const produtos = [
   {
     name: "Caixa de som",
     price: 200,
-    qtdProduct: 0,
     description:
       "Caixa de som portatil com conexão Bluetooth e bateria de longa duração",
     image:
@@ -89,7 +80,6 @@ const produtos = [
   {
     name: "Mouse Gamer Logitech",
     price: 450,
-    qtdProduct: 0,
     description:
       "Mouse gamer com sensor optico de alta precisão e botões programaveis.",
     image:
@@ -98,7 +88,6 @@ const produtos = [
   {
     name: "Teclado mecanico Corsair",
     price: 1100,
-    qtdProduct: 0,
     description:
       "Teclado mecanico com switches mecânicos e iluminação RGB personalizavel.",
     image:
