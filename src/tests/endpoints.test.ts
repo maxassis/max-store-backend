@@ -3,11 +3,12 @@ import request from "supertest";
 import { app, connectToDatabase } from "../index";
 import mongoose from "mongoose";
 import Cart from "../models/cart";
+import Produto from "../models/product";
 
 describe("Teste do ProdutoController e CartController", () => {
   beforeAll(async () => {
     if (mongoose.connection.readyState === 0) {
-      await connectToDatabase(); // Conecta ao banco de dados de teste
+      await connectToDatabase();
       console.log("Conectado ao banco de dados de teste");
     }
   });
@@ -31,7 +32,7 @@ describe("Teste do ProdutoController e CartController", () => {
     it("deve listar todos os produtos em estoque", async () => {
       const response = await request(app).get("/produtos");
       expect(response.status).toBe(200);
-      expect(response.body).toEqual([]); // Espera uma lista vazia inicialmente
+      expect(response.body).toEqual([]);
     });
 
     it("deve criar um novo produto", async () => {
@@ -46,10 +47,33 @@ describe("Teste do ProdutoController e CartController", () => {
       expect(response.status).toBe(201);
       expect(response.body.name).toBe("Novo Produto");
     });
+
+    it("deve deletar um produto existente", async () => {
+      const novoProduto = {
+        name: "Produto para Deletar",
+        description: "Descrição do Produto",
+        price: 100,
+        stock: 10,
+        image: "https://example.com/image.jpg",
+      };
+      const produtoCriado = await request(app)
+        .post("/produtos")
+        .send(novoProduto);
+
+      const response = await request(app).delete(
+        `/produtos/${produtoCriado.body._id}`
+      );
+
+      expect(response.status).toBe(204);
+
+      // Verifica se o produto foi removido do banco de dados
+      const produtoDeletado = await Produto.findById(produtoCriado.body._id);
+      expect(produtoDeletado).toBeNull();
+    });
   });
 
   // Testes do endpoint de Cart
-  describe("CartController - Criação de Carrinho", () => {
+  describe("CartController - Criação do Carrinho de um usuario", () => {
     it("deve criar um novo carrinho via requisição POST", async () => {
       const userId = "user123";
       const items = [
