@@ -11,7 +11,7 @@ export const listarProdutos = async (req: Request, res: Response) => {
     const produtos = await produtoService.listarProdutos();
     res.status(200).json(produtos);
   } catch (error) {
-    res.status(500).json({ error: (error as any).message });
+    res.status(500).json({ error: "erro ao listar produtos" });
   }
 };
 
