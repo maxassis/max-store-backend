@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import request from "supertest";
-import { app, connectToDatabase } from "../index"; // Importe o app e a função de conexão
+import { app, connectToDatabase } from "../index";
 import mongoose from "mongoose";
-import Cart from "../models/cart"; // Importe o modelo Cart
+import Cart from "../models/cart";
 
 describe("Teste do ProdutoController e CartController", () => {
   beforeAll(async () => {
