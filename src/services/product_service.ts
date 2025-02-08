@@ -5,6 +5,7 @@ export interface IProdutoInput {
   description: string;
   image: string;
   price: number;
+  stock: number;
 }
 
 class ProdutoService {
@@ -31,13 +32,14 @@ class ProdutoService {
   //  Criar um novo produto
   async criarProduto(dados: IProdutoInput) {
     try {
-      const { name, description, image, price } = dados;
+      const { name, description, image, price, stock } = dados;
 
       const novoProduto = new Produto({
         name,
         description,
         image,
         price,
+        stock,
       });
       await novoProduto.save();
       return novoProduto;

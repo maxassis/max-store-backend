@@ -8,7 +8,7 @@ export interface CartItem {
   image: string;
   description: string;
   stock: number;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface Cart extends Document {
