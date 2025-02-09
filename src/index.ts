@@ -4,8 +4,12 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import produtosRoutes from "./routes/product_routes";
 import cartRouters from "./routes/cart_routes";
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use("/produtos", produtosRoutes);
 app.use("/cart", cartRouters);
