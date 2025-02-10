@@ -28,7 +28,7 @@ Este é o backend da aplicação **Max Store**, desenvolvido com **Node.js** e *
 2.  Acesse a pasta do projeto:
     
     ```sh
-    cd nome-do-repo-backend
+    cd max-store-backend
     
     ```
     
