@@ -10,13 +10,13 @@ Este é o backend da aplicação **Max Store**, desenvolvido com **Node.js** e *
 
 -   🟢 Node.js
 -   🚀 Express.js
--   🍃 MongoDB
--   🛋️ Mongoose
+-   🎃 MongoDB
+-   🏪 Mongoose
 -   ✅ Zod
 -   🔥 Node-Cache
 -   🧪 Vitest
 
-## 📦 Instalação
+## 📺 Instalação
 
 1.  Clone o repositório:
     
@@ -82,23 +82,19 @@ O MongoDB será iniciado e estará acessível na porta `27017`.
     
     ```
     
-
 O servidor será iniciado em `http://localhost:3000/`.
 
-## 💂️ Estrutura do Projeto
+## 🛂 Populando o Banco de Dados (Seed)
 
-```
-📦 nome-do-repo-backend
- ├📚 src
- ┃ ├📚 controllers
- ┃ ├📚 models
- ┃ ├📚 routes
- ┃ ├📚 services
- ┃ ├📝 index.tsx
- ├📝 package.json
- └📝 README.md
+Para popular o banco de dados com produtos iniciais, execute:
 
+```sh
+npm run seed
+# ou
+yarn seed
 ```
+
+Isso irá adicionar os produtos padrão ao banco de dados MongoDB.
 
 ## ✅ Funcionalidades
 
@@ -123,7 +119,6 @@ Para rodar os testes:
 npm run test
 # ou
 yarn test
-
 ```
 
 ## 🔗 Repositório do Frontend
@@ -147,3 +142,4 @@ Este projeto está sob a licença MIT.
 ----------
 
 Feito com ❤️ por [Max Assis](https://github.com/maxassis)
+
