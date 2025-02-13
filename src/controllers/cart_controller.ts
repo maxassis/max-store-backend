@@ -3,7 +3,10 @@ import { CartSchema } from "../schemas/cart_schema";
 import { ZodError } from "zod";
 import CartService from "../services/cart_service";
 
-export const updateOrCreateCart = async (req: Request, res: Response) => {
+export const updateOrCreateCartController = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const validatedData = CartSchema.parse(req.body);
     const { userId, items } = validatedData;

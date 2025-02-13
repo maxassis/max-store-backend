@@ -1,5 +1,6 @@
 import NodeCache from "node-cache";
-import Produto from "../models/product";
+import Product from "../models/product";
+import { deleteProduct } from "../controllers/product_controller";
 
 export interface IProdutoInput {
   name: string;
@@ -11,21 +12,17 @@ export interface IProdutoInput {
 
 const cache = new NodeCache({ stdTTL: 600 });
 
-class ProdutoService {
-  // Listar todos os produtos em estoque
-  async listarProdutos() {
+class ProductService {
+  async listProducts() {
     const cacheKey = "lista_produtos";
 
     try {
       const cachedData = cache.get(cacheKey);
       if (cachedData) {
-        // console.log("Retornando lista de produtos do cache");
         return cachedData;
       }
 
-      // console.log("Buscando lista de produtos no banco de dados...");
-
-      const produtos = await Produto.find({ stock: { $gt: 0 } });
+      const produtos = await Product.find({ stock: { $gt: 0 } });
 
       cache.set(cacheKey, produtos);
 
@@ -35,21 +32,16 @@ class ProdutoService {
     }
   }
 
-  // Retornar um único produto
-  async obterProduto(id: string) {
+  async getProduct(id: string) {
     const cacheKey = `produto_${id}`;
 
     try {
-      // Verifica se o produto já está em cache
       const cachedData = cache.get(cacheKey);
       if (cachedData) {
-        // console.log(`Retornando produto ${id} do cache`);
         return cachedData;
       }
 
-      // console.log(`Buscando produto ${id} no banco de dados...`);
-
-      const produto = await Produto.findById(id);
+      const produto = await Product.findById(id);
 
       if (!produto) {
         throw new Error("Produto não encontrado");
@@ -63,12 +55,11 @@ class ProdutoService {
     }
   }
 
-  // Criar um novo produto
-  async criarProduto(dados: IProdutoInput) {
+  async createProduct(dados: IProdutoInput) {
     try {
       const { name, description, image, price, stock } = dados;
 
-      const novoProduto = new Produto({
+      const novoProduto = new Product({
         name,
         description,
         image,
@@ -77,7 +68,6 @@ class ProdutoService {
       });
       await novoProduto.save();
 
-      // Limpa o cache da lista de produtos, pois um novo produto foi adicionado
       cache.del("lista_produtos");
 
       return novoProduto;
@@ -86,10 +76,9 @@ class ProdutoService {
     }
   }
 
-  // Atualizar um produto por ID
-  async atualizarProduto(id: string, dados: Partial<IProdutoInput>) {
+  async updateProduct(id: string, dados: Partial<IProdutoInput>) {
     try {
-      const produtoAtualizado = await Produto.findByIdAndUpdate(id, dados, {
+      const produtoAtualizado = await Product.findByIdAndUpdate(id, dados, {
         new: true,
       });
 
@@ -97,7 +86,6 @@ class ProdutoService {
         throw new Error("Produto não encontrado");
       }
 
-      // Limpa o cache da lista de produtos, pois um produto foi atualizado
       cache.del("lista_produtos");
 
       return produtoAtualizado;
@@ -106,16 +94,14 @@ class ProdutoService {
     }
   }
 
-  // Excluir um produto por ID
-  async excluirProduto(id: string) {
+  async deleteProduct(id: string) {
     try {
-      const produtoExcluido = await Produto.findByIdAndDelete(id);
+      const produtoExcluido = await Product.findByIdAndDelete(id);
 
       if (!produtoExcluido) {
         throw new Error("Produto não encontrado");
       }
 
-      // Limpa o cache da lista de produtos, pois um produto foi excluído
       cache.del("lista_produtos");
 
       return { message: "Produto excluído com sucesso" };
@@ -125,4 +111,4 @@ class ProdutoService {
   }
 }
 
-export default new ProdutoService();
+export default new ProductService();

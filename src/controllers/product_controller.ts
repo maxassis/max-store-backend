@@ -1,28 +1,27 @@
 import { Request, Response } from "express";
 import ProdutoService from "../services/product_service";
-import { produtoSchema } from "../schemas/product_schema";
+import { productSchema } from "../schemas/product_schema";
 import { z } from "zod";
 
-const produtoService = ProdutoService;
+const productService = ProdutoService;
 
-// Listar todos os produtos
-export const listarProdutos = async (req: Request, res: Response) => {
+export const listProducts = async (req: Request, res: Response) => {
   try {
-    const produtos = await produtoService.listarProdutos();
+    const produtos = await productService.listProducts();
     res.status(200).json(produtos);
   } catch (error) {
     res.status(500).json({ error: "erro ao listar produtos" });
   }
 };
 
-export const obterProduto = async (req: Request, res: Response) => {
+export const getProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
     const idSchema = z.string();
     const validatedId = idSchema.parse(id);
 
-    const produto = await produtoService.obterProduto(validatedId);
+    const produto = await productService.getProduct(validatedId);
     res.status(200).json(produto);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -35,12 +34,11 @@ export const obterProduto = async (req: Request, res: Response) => {
   }
 };
 
-// Criar um novo produto
-export const criarProduto = async (req: Request, res: Response) => {
+export const createProduct = async (req: Request, res: Response) => {
   try {
-    const validatedData = produtoSchema.parse(req.body);
+    const validatedData = productSchema.parse(req.body);
 
-    const novoProduto = await produtoService.criarProduto(validatedData);
+    const novoProduto = await productService.createProduct(validatedData);
     res.status(201).json(novoProduto);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -53,13 +51,13 @@ export const criarProduto = async (req: Request, res: Response) => {
   }
 };
 
-export const excluirProduto = async (req: Request, res: Response) => {
+export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const idSchema = z.string();
     const validatedId = idSchema.parse(id);
 
-    await produtoService.excluirProduto(validatedId);
+    await productService.deleteProduct(validatedId);
     res.status(204).send();
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -72,15 +70,15 @@ export const excluirProduto = async (req: Request, res: Response) => {
   }
 };
 
-export const atualizarProduto = async (req: Request, res: Response) => {
+export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const idSchema = z.string();
     const validatedId = idSchema.parse(id);
 
-    const validatedData = produtoSchema.partial().parse(req.body);
+    const validatedData = productSchema.partial().parse(req.body);
 
-    const produtoAtualizado = await produtoService.atualizarProduto(
+    const produtoAtualizado = await productService.updateProduct(
       validatedId,
       validatedData
     );
