@@ -13,13 +13,11 @@ describe("Teste do ProdutoController e CartController", () => {
     }
   });
 
-  // Desconexão do banco de dados após todos os testes
   afterAll(async () => {
     await mongoose.connection.close();
     console.log("Desconectado do banco de dados de teste");
   });
 
-  // Limpeza do banco de dados antes de cada teste
   beforeEach(async () => {
     if (mongoose.connection.db) {
       await mongoose.connection.db.dropDatabase();
@@ -27,7 +25,6 @@ describe("Teste do ProdutoController e CartController", () => {
     }
   });
 
-  // Testes dos endpoints de Produtos
   describe("ProdutoController", () => {
     it("deve listar todos os produtos em estoque", async () => {
       const response = await request(app).get("/produtos");
@@ -66,36 +63,98 @@ describe("Teste do ProdutoController e CartController", () => {
 
       expect(response.status).toBe(204);
 
-      // Verifica se o produto foi removido do banco de dados
       const produtoDeletado = await Produto.findById(produtoCriado.body._id);
       expect(produtoDeletado).toBeNull();
     });
   });
 
-  // Testes do endpoint de Cart
-  describe("CartController - Criação do Carrinho de um usuario", () => {
+  describe("Criação do Carrinho de um usuário", () => {
+    beforeEach(async () => {
+      await Cart.deleteMany({});
+      await Produto.deleteMany({});
+      console.log("Banco de dados limpo");
+    });
+
     it("deve criar um novo carrinho via requisição POST", async () => {
+      const produto = {
+        _id: new mongoose.Types.ObjectId(),
+        name: "Produto 1",
+        price: 100,
+        stock: 10,
+        image: "https://example.com/image.jpg",
+        description: "Descrição do Produto 1",
+      };
+      await Produto.create(produto);
+
       const userId = "user123";
       const items = [
         {
-          _id: "prod1",
+          _id: produto._id,
           name: "Produto 1",
           qtdProduct: 2,
           price: 100,
-          image: "imagem1.jpg",
+          image: "https://example.com/image.jpg",
           description: "Descrição do Produto 1",
           stock: 10,
         },
       ];
+
       const response = await request(app).post("/cart").send({ userId, items });
+
       expect(response.status).toBe(200);
       expect(response.body.message).toBe("Carrinho atualizado com sucesso");
+      expect(response.body.data.userId).toBe(userId);
+      expect(response.body.data.items).toHaveLength(1);
+      expect(response.body.data.items[0].name).toBe("Produto 1");
+    });
 
-      const cart = await Cart.findOne({ userId });
-      expect(cart).toBeDefined();
-      expect(cart?.userId).toBe(userId);
-      expect(cart?.items).toHaveLength(1);
-      expect(cart?.items[0].name).toBe("Produto 1");
+    it("deve retornar erro se o produto não existir", async () => {
+      const userId = "user123";
+      const items = [
+        {
+          _id: "prod2",
+          name: "Produto 2",
+          qtdProduct: 1,
+          price: 200,
+          image: "https://example.com/image.jpg",
+          description: "Descrição do Produto 2",
+          stock: 5,
+        },
+      ];
+
+      const response = await request(app).post("/cart").send({ userId, items });
+
+      expect(response.status).toBe(500);
+    });
+
+    it("deve retornar erro se o estoque for insuficiente", async () => {
+      const produto = {
+        _id: new mongoose.Types.ObjectId(),
+        name: "Produto 3",
+        price: 300,
+        stock: 5,
+        image: "https://example.com/image.jpg",
+        description: "Descrição do Produto 3",
+      };
+      await Produto.create(produto);
+
+      const userId = "user123";
+      const items = [
+        {
+          _id: produto._id,
+          name: "Produto 3",
+          qtdProduct: 10,
+          price: 300,
+          image: "https://example.com/image.jpg",
+          description: "Descrição do Produto 3",
+          stock: 5,
+        },
+      ];
+
+      const response = await request(app).post("/cart").send({ userId, items });
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe("Estoque insuficiente");
     });
   });
 });
